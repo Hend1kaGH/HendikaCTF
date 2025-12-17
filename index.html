@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HendikaCTF</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body class="crt-overlay">
+    <audio id="sfx-hover" src="audio/hover.mp3" preload="auto"></audio>
+    <audio id="sfx-click" src="audio/click.mp3" preload="auto"></audio>
+    <audio id="sfx-success" src="audio/success.mp3" preload="auto"></audio>
+    <audio id="sfx-char-voice" src="audio/karakter_ngomong.mp3" preload="auto" loop></audio>
+    <div class="grid-bg"></div>
+
+<nav id="top-navbar">
+    <div class="nav-container">
+        <div class="brand">HCTF.<span class="neon-pink">OS</span></div>
+        <div class="links">
+            <button onclick="changePage('home')" class="nav-item">HOME</button>
+            <button onclick="changePage('missions')" class="nav-item">CHALLENGES</button>
+            <button onclick="changePage('scoreboard')" class="nav-item">SCOREBOARD</button>
+            <button onclick="changePage('about')" class="nav-item">ABOUT</button>
+        </div>
+        <div class="user-profile-nav" style="display: flex; align-items: center; gap: 15px;">
+            <div id="clock" style="font-size: 9px;">00:00:00</div>
+            <span id="nav-username" class="neon-pink" style="font-size: 9px;">GUEST</span>
+            <span id="nav-coin" style="color: gold; font-size: 9px;">0 PTS</span>
+            <button onclick="logout()" class="logout-btn" style="background:none; border:none; color:var(--pink); cursor:pointer; font-family:inherit; font-size:9px;">[LOGOUT]</button>
+        </div>
+    </div>
+</nav>
+
+<section id="scoreboard" class="page hidden">
+    <div class="container">
+        <h2 class="section-title">Global Ranking</h2>
+        <div class="about-window" style="max-width: 800px; margin: 0 auto; width: 100%;">
+            <table class="pixel-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead style="background: var(--pink); color: #000;">
+                    <tr>
+                        <th style="padding: 10px;">RANK</th>
+                        <th style="padding: 10px;">AGENT</th>
+                        <th style="padding: 10px;">POINTS</th>
+                    </tr>
+                </thead>
+                <tbody id="scoreboard-body">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<div class="grid-bg"></div>
+<canvas id="hacker-canvas"></canvas>
+    
+    <main id="app-viewport">
+        <section id="home" class="page">
+            <div class="hero">
+                <p class="pixel-label">Ready to</p>
+                <h1 class="glitch-text">HCTF</h1>
+                <p class="hero-date">SELASA, 16 DESEMBER 2025</p>
+                <div class="cta-wrapper">
+                    <button class="cta-btn" onclick="changePage('missions')" onmouseenter="playHover()">MULAI TANTANGAN</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="missions" class="page hidden">
+            <div class="container">
+                <h2 class="section-title">Challenges</h2>
+                <div id="mission-content"></div>
+            </div>
+        </section>
+
+      <section id="about" class="page hidden">
+    <div class="container about-wrapper">
+        <div class="character-side">
+            <img src="assets/hacker-char.png" alt="Mascot" class="pixel-char">
+        </div>
+
+        
+        <div class="about-window">
+    <h3 class="neon-text" style="margin-bottom: 15px;">Apa itu CTF?</h3>
+    <div class="desc-box terminal-effect">
+        <p id="about-text-typing"></p>
+    </div>
+</div>
+</section>
+
+        <footer style="text-align: center; padding: 40px 20px; color: var(--gray); font-size: 8px; opacity: 0.7;">
+            <p style="margin-bottom: 10px;">&copy; 2025 HCTF.OS OPERATING SYSTEM</p>
+            <p>DESIGNED BY <span class="neon-pink" style="color: #ff00ff;">Hendika Adhi Wibawanta</span>+6285800352368</p>
+        </footer>
+    </main>
+
+    <div id="modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-top">
+                <span id="m-cat">CAT_NAME</span>
+                <button onclick="closeModal()" onmouseenter="playHover()" class="close-btn">[X]</button>
+            </div>
+            <div class="modal-main">
+                <h2 id="m-title">TITLE</h2>
+
+                <div class="modal-coin-display" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px;">
+                    <img src="assets/coin.png" alt="coin" style="width: 20px; height: 20px; object-fit: contain;">
+                    <span id="m-pts" style="font-size: 14px; color: #ffcc00;">0</span>
+                </div>
+                <div class="desc-box">
+                    <p id="m-desc">Briefing data loading...</p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <button onclick="showHint()" onmouseenter="playHover()" class="hint-btn" style="cursor: pointer; background: transparent; border: 1px solid #00ffff; color: #00ffff; font-family: 'Press Start 2P'; font-size: 8px; padding: 5px 10px;">
+                        [ MINTA_HINT ]
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <a id="m-link" href="#" download class="dl-link" onmouseenter="playHover()">Download file</a>
+                    <div class="input-group">
+                        <span class="input-prefix">bn-linLST</span>
+                        <input type="text" id="flag-input" placeholder="HCTF{flag_here}">
+                        <button onclick="submitFlag()" onmouseenter="playHover()" class="verify-btn">submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="custom-alert" class="modal-overlay hidden" style="z-index: 999;">
+    <div class="modal-card" style="width: 400px; border: 2px solid var(--cyan); box-shadow: 0 0 20px var(--cyan);">
+        <div class="modal-top" style="background: var(--cyan);">
+            <span id="alert-title" style="color: #000;">SYSTEM MESSAGE</span>
+            <button onclick="closeAlert()" class="close-btn">[X]</button>
+        </div>
+        <div class="modal-main" style="padding: 20px; text-align: center;">
+            <div id="alert-content" class="desc-box" style="margin-bottom: 20px; border-left: none; border: 1px solid var(--cyan);">
+                </div>
+            <button onclick="closeAlert()" class="cta-btn" style="padding: 10px 20px; font-size: 10px;">CONTINUE</button>
+        </div>
+    </div>
+</div>
+
+<div id="custom-alert" class="modal-overlay hidden" style="z-index: 9999;">
+    <div class="modal-card alert-neon">
+        <div class="modal-top">
+            <span id="alert-title">SYSTEM MESSAGE</span>
+            <button onclick="closeAlert()" class="close-btn">[X]</button>
+        </div>
+        <div class="modal-main">
+            <div id="alert-content" class="alert-desc-box"></div>
+            <button onclick="closeAlert()" class="cta-btn alert-continue">CONTINUE</button>
+        </div>
+    </div>
+</div>
+
+    <script src="database.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

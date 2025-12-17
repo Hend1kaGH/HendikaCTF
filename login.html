@@ -124,6 +124,24 @@
 </div>
 
     <script src="database.js"></script>
+
+<script>
+    function processLogin() {
+        const u = document.getElementById('username').value.trim();
+        const p = document.getElementById('password').value;
+        
+        // Memanggil fungsi dari database.js
+        const user = validateUser(u, p); 
+
+        if (user) {
+            sessionStorage.setItem("isLoggedIn", "true");
+            sessionStorage.setItem("currentUser", user.user);
+            window.location.href = "index.html";
+        } else {
+            document.getElementById('error-msg').innerText = "AKSES DITOLAK!";
+        }
+    }
+</script>
     <script>
         // Animasi Background Matrix
         const canvas = document.getElementById('hacker-canvas');
@@ -172,4 +190,5 @@
         }
     </script>
 </body>
+
 </html>

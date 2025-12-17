@@ -158,8 +158,50 @@
     </div>
 </div>
 
-    <script src="database.js"></script>
-    <script src="script.js"></script>
+    <script>
+    // Gunakan async karena memanggil fungsi validateUser yang mengambil data dari internet
+    async function processLogin() {
+        const u = document.getElementById('username').value.trim();
+        const p = document.getElementById('password').value;
+        const msg = document.getElementById('error-msg');
+        const charMsg = document.getElementById('char-msg');
+        const loginBtn = document.querySelector('.cta-btn');
+
+        if (!u || !p) {
+            msg.innerText = "ISI SEMUA DATA!";
+            return;
+        }
+
+        // Kunci tombol agar tidak diklik berkali-kali saat loading
+        loginBtn.disabled = true;
+        loginBtn.innerText = "AUTHENTICATING...";
+
+        try {
+            // Pakai 'await' karena ini mengambil data dari Cloud
+            const user = await validateUser(u, p);
+
+            if (user) {
+                charMsg.innerText = "AKSES DITERIMA! SELAMAT DATANG, " + u.toUpperCase();
+                charMsg.style.color = "green";
+                sessionStorage.setItem("isLoggedIn", "true");
+                sessionStorage.setItem("currentUser", user.user);
+                setTimeout(() => { window.location.href = "index.html"; }, 1500);
+            } else {
+                msg.innerText = "ACCESS DENIED!";
+                charMsg.innerText = "SIAPA KAMU?! NISN ATAU PASSWORD SALAH!";
+                charMsg.style.color = "red";
+                loginBtn.disabled = false;
+                loginBtn.innerText = "AUTH_ACCESS";
+            }
+        } catch (err) {
+            msg.innerText = "KONEKSI GAGAL!";
+            loginBtn.disabled = false;
+            loginBtn.innerText = "AUTH_ACCESS";
+        }
+    }
+</script>
+    
 </body>
 
 </html>
+

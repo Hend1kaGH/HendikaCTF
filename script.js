@@ -430,19 +430,29 @@ function initUserSession() {
 
 // --- Fungsi Render Tabel Scoreboard ---
 function renderScoreboard() {
-    const tbody = document.getElementById('scoreboard-body');
-    if (!tbody || typeof userDatabase === 'undefined') return;
+    const tableBody = document.getElementById('scoreboard-body');
+    if (!tableBody) return;
 
-    // Urutkan skor tertinggi
-    const sorted = [...userDatabase].sort((a, b) => b.score - a.score);
-    
-    tbody.innerHTML = sorted.map((u, i) => `
-        <tr style="border-bottom: 1px solid rgba(255,0,255,0.2);">
-            <td style="padding: 15px;">#${i + 1}</td>
-            <td style="padding: 15px;">${u.user.toUpperCase()}</td>
-            <td style="padding: 15px; color: gold;">${u.score} PTS</td>
-        </tr>
-    `).join('');
+    // Ambil data dari Firebase secara Real-Time
+    db.ref('users').on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+
+        // Ubah objek menjadi array agar bisa diurutkan
+        const usersArray = Object.values(data);
+        
+        // Urutkan berdasarkan skor tertinggi
+        usersArray.sort((a, b) => b.score - a.score);
+
+        // Tampilkan ke tabel
+        tableBody.innerHTML = usersArray.map((u, i) => `
+            <tr style="border-bottom: 1px solid rgba(255,0,255,0.2);">
+                <td style="padding: 15px;">#${i + 1}</td>
+                <td style="padding: 15px;">${u.user.toUpperCase()}</td>
+                <td style="padding: 15px; color: gold;">${u.score} PTS</td>
+            </tr>
+        `).join('');
+    });
 }
 
 
@@ -479,4 +489,5 @@ function drawMatrix() {
         drops[i]++;
     });
 }
+
 setInterval(drawMatrix, 50);

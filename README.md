@@ -1,13 +1,5 @@
 # Web
-echo ___  ___  _______   ________   ________  ___  ___  __    ________          ________ _________  ________ 
-echo|\  \|\  \|\  ___ \ |\   ___  \|\   ___ \|\  \|\  \|\  \ |\   __  \        |\   ____\\___   ___\\  _____\
-echo\ \  \\\  \ \   __/|\ \  \\ \  \ \  \_|\ \ \  \ \  \/  /|\ \  \|\  \       \ \  \___\|___ \  \_\ \  \__/ 
-echo \ \   __  \ \  \_|/_\ \  \\ \  \ \  \ \\ \ \  \ \   ___  \ \   __  \       \ \  \       \ \  \ \ \   __\
-echo  \ \  \ \  \ \  \_|\ \ \  \\ \  \ \  \_\\ \ \  \ \  \\ \  \ \  \ \  \       \ \  \____   \ \  \ \ \  \_|
-echo   \ \__\ \__\ \_______\ \__\\ \__\ \_______\ \__\ \__\\ \__\ \__\ \__\       \ \_______\  \ \__\ \ \__\ 
-echo    \|__|\|__|\|_______|\|__| \|__|\|_______|\|__|\|__| \|__|\|__|\|__|        \|_______|   \|__|  \|__| 
-                                                                                                         
-                                                                                                         
+                                                                                                                                                                                                                  
 # 🛡️ HendikaCTF.OS - Cyber Security Challenge Platform
 
 ![HendikaCTF Banner](https://img.shields.io/badge/Status-Development-green?style=for-the-badge&logo=github)
@@ -37,3 +29,4 @@ Semua flag tidak disimpan dalam teks biasa. Kami menggunakan algoritma SHA-512 u
 // Contoh di data.js
 
 flagHash: "cf83e1357eefb8bdf1542850d66d8007d620e40..." // Hasil hash, bukan flag asli                                                                                                         
+

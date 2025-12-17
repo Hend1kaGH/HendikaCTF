@@ -41,10 +41,7 @@ var userDatabase = [
 
 // 2. Fungsi validateUser yang diperbaiki
 function validateUser(u, p) {
-    // Kita ubah input ke string untuk jaga-jaga jika user memasukkan angka
     const inputUser = String(u).trim();
-    
-    return userDatabase.find(account => 
-        account.user === inputUser && account.pass === p
-    );
+    // Mencari user di dalam array userDatabase
+    return userDatabase.find(account => account.user === inputUser && account.pass === p);
 }

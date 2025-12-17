@@ -1,0 +1,21 @@
+// Di file database.js (sebelum di-obfuscate)
+window.userDatabase = [
+    { 
+        user: "admin", 
+        // Ini adalah hasil SHA-512 dari "password123"
+        passHash: "29e860a9ade4fd210699d2cb6d2969d20281fa2e3f332f751e282c8aceee440e28b0394c60c8f9d6cc1f371be788c4093306b7c350a54b38fe02c057609bb69a",        score: 0, 
+        solved: [] 
+    },
+    { 
+        user: "user", 
+        passHash: "b14361404c078ffd549c03db443c3fede2f3e534d73f78f77301ed97d4a436a9fd9db05ee8b325c0ad36438b43fec8510c204fc1c1edb21d0941c00e9e2c1ce2", 
+        score: 0, 
+        solved: [] 
+    }
+];
+
+// Update fungsi validasi agar menggunakan Hash
+window.validateUser = function(username, password) {
+    const hashedInput = sha512(password);
+    return window.userDatabase.find(u => u.user === username && u.passHash === hashedInput);
+};

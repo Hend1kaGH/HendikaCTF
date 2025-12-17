@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HendikaCTF</title>
@@ -158,50 +154,13 @@
     </div>
 </div>
 
-    <script>
-    // Gunakan async karena memanggil fungsi validateUser yang mengambil data dari internet
-    async function processLogin() {
-        const u = document.getElementById('username').value.trim();
-        const p = document.getElementById('password').value;
-        const msg = document.getElementById('error-msg');
-        const charMsg = document.getElementById('char-msg');
-        const loginBtn = document.querySelector('.cta-btn');
-
-        if (!u || !p) {
-            msg.innerText = "ISI SEMUA DATA!";
-            return;
-        }
-
-        // Kunci tombol agar tidak diklik berkali-kali saat loading
-        loginBtn.disabled = true;
-        loginBtn.innerText = "AUTHENTICATING...";
-
-        try {
-            // Pakai 'await' karena ini mengambil data dari Cloud
-            const user = await validateUser(u, p);
-
-            if (user) {
-                charMsg.innerText = "AKSES DITERIMA! SELAMAT DATANG, " + u.toUpperCase();
-                charMsg.style.color = "green";
-                sessionStorage.setItem("isLoggedIn", "true");
-                sessionStorage.setItem("currentUser", user.user);
-                setTimeout(() => { window.location.href = "index.html"; }, 1500);
-            } else {
-                msg.innerText = "ACCESS DENIED!";
-                charMsg.innerText = "SIAPA KAMU?! NISN ATAU PASSWORD SALAH!";
-                charMsg.style.color = "red";
-                loginBtn.disabled = false;
-                loginBtn.innerText = "AUTH_ACCESS";
-            }
-        } catch (err) {
-            msg.innerText = "KONEKSI GAGAL!";
-            loginBtn.disabled = false;
-            loginBtn.innerText = "AUTH_ACCESS";
-        }
+<script src="https://cdn.jsdelivr.net/npm/js-sha512@0.8.0/src/sha512.min.js"></script>
+<script src="data.js"></script> <script src="database.js"></script>
+<script>
+    function processLogin() { 
+        const user = validateUser(u, p);
     }
 </script>
-    
-</body>
+<script src="script.js"></script>
 
 </html>
-

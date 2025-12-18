@@ -48,33 +48,40 @@ function playClick() {
 let currentChallengeId = null;
 
 function changePage(pageId) {
-    playClick();
+    if (typeof playClick === "function") playClick();
 
-    
+    // 1. Sembunyiin semua section page
     document.querySelectorAll('.page').forEach(p => {
         p.classList.remove('active');
         p.classList.add('hidden');
     });
 
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    // 2. Bersihkan status active dari semua button navigasi
+    document.querySelectorAll('.nav-item').forEach(n => {
+        n.classList.remove('active');
+    });
 
+    // 3. Munculkan page yang dipilih
     const target = document.getElementById(pageId);
     if (target) {
         target.classList.remove('hidden');
         setTimeout(() => target.classList.add('active'), 10);
     }
 
+    // 4. Nyalakan button di navbar sesuai ID yang kita buat di HTML tadi
     const navBtn = document.getElementById('nav-' + pageId);
-    if (navBtn) navBtn.classList.add('active');
+    if (navBtn) {
+        navBtn.classList.add('active');
+    }
 
-    if (pageId === 'missions') renderMissions();
-
-if (pageId === 'about') {
-    setTimeout(() => {
-        startAboutTyping();
-    }, 300); // delay dikit biar animasi page selesai
-}
-
+    // Logic khusus page tertentu
+    if (pageId === 'missions' && typeof renderMissions === "function") renderMissions();
+    if (pageId === 'scoreboard' && typeof renderScoreboard === "function") renderScoreboard();
+    if (pageId === 'about' && typeof startAboutTyping === "function") {
+        const aboutContainer = document.getElementById('about-text');
+        if (aboutContainer) aboutContainer.innerHTML = ''; 
+        setTimeout(startAboutTyping, 300);
+    }
 }
 
 // --- 4. RENDER KARTU TANTANGAN ---
@@ -168,7 +175,70 @@ function openModal(id) {
 
     document.getElementById('m-title').innerText = data.title;
     document.getElementById('m-cat').innerText = data.cat;
-    document.getElementById('m-desc').innerText = data.desc;
+    
+    // Mapping link DAN NAMA untuk setiap challenge
+    const linkConfig = {
+        1: { 
+            url: 'https://hend1kagh.github.io/Mr-Cookie/',
+            name: 'Buka Challenge MrCookie 🍪'
+        },
+        2: { 
+            url: 'https://www.base64decode.org/',
+            name: 'Decode Base64 Online 🔐'
+        },
+        3: { 
+            url: 'https://en.wikipedia.org/wiki/XOR_cipher',
+            name: 'Pelajari XOR Cipher 🧩'
+        },
+        4: { 
+            url: 'https://cryptii.com/',
+            name: 'Tools Kriptografi 🔧'
+        },
+        5: { 
+            url: 'https://exiftool.org/',
+            name: 'Analisis Metadata 📷'
+        },
+        6: { 
+            url: 'https://www.wireshark.org/',
+            name: 'Download Wireshark 🌐'
+        },
+        7: { 
+            url: 'https://ghidra-sre.org/',
+            name: 'Reverse Engineering ⚙️'
+        },
+        8: { 
+            url: 'https://crackstation.net/',
+            name: 'Crack Hash Online 🔓'
+        },
+        9: { 
+            url: 'https://ctftime.org/ctf-wtf/',
+            name: 'Learn About CTF 🏆'
+        }
+    };
+    
+    const linkInfo = linkConfig[id];
+    
+    // BUAT DESKRIPSI DENGAN LINK INTERAKTIF
+    const descElement = document.getElementById('m-desc');
+    
+    // Escape deskripsi untuk mencegah XSS
+    let descHTML = data.desc.replace(/&/g, '&amp;')
+                           .replace(/</g, '&lt;')
+                           .replace(/>/g, '&gt;')
+                           .replace(/\n/g, '<br>');
+    
+    // Jika ada link untuk challenge ini, tambahkan ke deskripsi
+    if (linkInfo && linkInfo.url) {
+        // Escape URL untuk keamanan
+        const safeUrl = linkInfo.url.replace(/"/g, '&quot;');
+        const safeName = linkInfo.name.replace(/"/g, '&quot;');
+        
+        // Tambahkan link interaktif di akhir deskripsi
+        descHTML += '<br><br><a href="#" class="inline-desc-link" data-url="' + safeUrl + '" onclick="event.preventDefault(); playClick(); window.open(this.getAttribute(\'data-url\'), \'_blank\'); return false;" onmouseenter="playHover()" style="color: var(--cyan); text-decoration: none; border-bottom: 1px dotted var(--cyan); padding: 2px 0; font-size: 10px; transition: all 0.3s;">' + safeName + '</a>';
+    }
+    
+    descElement.innerHTML = descHTML;
+    
     document.getElementById('m-pts').innerText = data.pts;
 
     const downloadBtn = document.getElementById('m-link');
@@ -187,7 +257,6 @@ function closeModal() {
     playClick();
     document.getElementById('modal').classList.add('hidden');
 }
-
 // --- 6. LOGIKA SUBMIT FLAG & HINT ---
 // --- FUNGSI KONTROL ALERT CUSTOM ---
 function showAlert(title, message, isSuccess = false) {
@@ -403,3 +472,4 @@ function drawMatrix() {
     });
 }
 setInterval(drawMatrix, 50);
+

@@ -116,9 +116,23 @@ body::after {
     transition: 0.3s;
 }
 
+.nav-item {
+    background: none;
+    border: none;
+    color: var(--white);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 10px;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+}
+
+/* Style pas menu diklik/aktif */
 .nav-item.active {
-    color: var(--cyan);
-    text-shadow: 0 0 10px var(--cyan);
+    color: var(--cyan) !important;
+    border-bottom: 2px solid var(--cyan);
+    text-shadow: 0 0 8px var(--cyan);
+    background: rgba(0, 255, 255, 0.05);
 }
 
 /* =========================
@@ -967,3 +981,18 @@ input#flag-input {
 }
 
 .rank-1 { color: gold !important; text-shadow: 0 0 10px gold; }
+
+/* Style untuk tombol referensi di deskripsi */
+#ref-link-container button {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+#ref-link-container button:hover {
+    transform: translateY(-2px);
+}
+
+#ref-link-container button:active {
+    transform: translateY(0);
+}

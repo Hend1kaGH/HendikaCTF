@@ -179,40 +179,44 @@ function openModal(id) {
     // Mapping link DAN NAMA untuk setiap challenge
     const linkConfig = {
         1: { 
+            url: 'https://ctftime.org/ctf-wtf/',
+            name: 'Learn About CTF 🏆'
+        },
+        2: { 
             url: 'https://hend1kagh.github.io/Mr-Cookie/',
             name: 'Buka Challenge MrCookie 🍪'
         },
-        2: { 
+        3: { 
             url: 'https://www.base64decode.org/',
             name: 'Decode Base64 Online 🔐'
         },
-        3: { 
+        4: { 
             url: 'https://en.wikipedia.org/wiki/XOR_cipher',
             name: 'Pelajari XOR Cipher 🧩'
         },
-        4: { 
+        5: { 
             url: 'https://cryptii.com/',
             name: 'Tools Kriptografi 🔧'
         },
-        5: { 
+        6: { 
             url: 'https://exiftool.org/',
             name: 'Analisis Metadata 📷'
         },
-        6: { 
+        7: { 
             url: 'https://www.wireshark.org/',
             name: 'Download Wireshark 🌐'
         },
-        7: { 
+        8: { 
             url: 'https://ghidra-sre.org/',
             name: 'Reverse Engineering ⚙️'
         },
-        8: { 
+        9: { 
             url: 'https://crackstation.net/',
             name: 'Crack Hash Online 🔓'
         },
-        9: { 
-            url: 'https://ctftime.org/ctf-wtf/',
-            name: 'Learn About CTF 🏆'
+        10: { 
+            url: 'google.com',
+            name: 'Comingsoon'
         }
     };
     
